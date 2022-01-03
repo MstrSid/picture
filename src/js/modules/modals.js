@@ -1,12 +1,12 @@
 const modals = () => {
 	let timerId;
+	const scroll = calcScroll();
 
-	function bindModal(triggerSelector, modalSelector, closeSelector, closeClickOverlay = true) {
+	function bindModal(triggerSelector, modalSelector, closeSelector) {
 		const trigger = document.querySelectorAll(triggerSelector),
 			modal = document.querySelector(modalSelector),
 			close = document.querySelector(closeSelector),
-			windows = document.querySelectorAll('[data-modal]'),
-			scroll = calcScroll();
+			windows = document.querySelectorAll('[data-modal]');
 
 		trigger.forEach(item => {
 			item.addEventListener('click', (event) => {
@@ -34,7 +34,7 @@ const modals = () => {
 		});
 
 		modal.addEventListener('click', (event) => {
-			if (event.target === modal && closeClickOverlay === true) {
+			if (event.target === modal) {
 				windows.forEach(item => {
 					item.style.display = 'none';
 				});
@@ -74,6 +74,7 @@ const modals = () => {
 			if (!display) {
 				document.querySelector(selector).style.display = 'block';
 				document.body.style.overflow = "hidden";
+				document.body.style.marginRight = `${scroll}px`;
 			}
 		}, time);
 		return timerId;
