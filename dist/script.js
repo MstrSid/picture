@@ -124,6 +124,7 @@ __webpack_require__.r(__webpack_exports__);
 const forms = () => {
   const form = document.querySelectorAll('form'),
         inputs = document.querySelectorAll('input'),
+        selects = document.querySelectorAll('select'),
         phoneInputs = document.querySelectorAll('input[name="phone"]'),
         upload = document.querySelectorAll('[name="upload"]');
   const message = {
@@ -152,6 +153,9 @@ const forms = () => {
     inputs.forEach(item => {
       item.value = '';
     });
+    selects.forEach(item => {
+      item.selectedIndex = 0;
+    });
     upload.forEach(item => {
       item.previousElementSibling.textContent = message.noFile;
     });
@@ -159,16 +163,19 @@ const forms = () => {
 
   upload.forEach(item => {
     item.addEventListener('input', () => {
-      console.log(item.files[0]);
       let fileName;
+      const lastIndexDot = item.files[0].name.lastIndexOf('.');
+      const extension = item.files[0].name.substring(lastIndexDot, item.files[0].name.length);
+      console.log(lastIndexDot);
+      console.log(extension);
 
-      if (item.files[0].name.split('.')[0].length > 7) {
-        fileName = `${item.files[0].name.substring(0, 6)}...${item.files[0].name.split('.')[1]}`;
+      if (item.files[0].name.substring(0, lastIndexDot).length > 7) {
+        fileName = `${item.files[0].name.substring(0, 6)}...${extension}`;
       } else {
         fileName = `${item.files[0].name}`;
       }
 
-      console.group(item.previousElementSibling);
+      console.group(fileName);
       item.previousElementSibling.textContent = fileName;
     });
   });
