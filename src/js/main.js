@@ -1,6 +1,8 @@
 import modals from './modules/modals';
 import sliders from './modules/sliders';
 import forms from './modules/forms';
+import mask from './modules/mask';
+import checkLangInput from './modules/chekLangInput';
 
 window.addEventListener('DOMContentLoaded', () => {
 	'use strict';
@@ -8,4 +10,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	sliders('.main-slider-item', undefined, undefined, 'vertical');
 	sliders('.feedback-slider-item', '.main-prev-btn', '.main-next-btn');
 	forms();
+	mask('[name="phone"]');
+	checkLangInput('[name="name"]');
+	checkLangInput('[name="message"]');
 });

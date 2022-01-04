@@ -61,12 +61,6 @@ const forms = () => {
 		});
 	});
 
-	phoneInputs.forEach(item => {
-		item.addEventListener('input', () => {
-			item.value = item.value.replace(/[^0-9^+^\-^(^)]/, '');
-		});
-	});
-
 	form.forEach(item => {
 		item.addEventListener('submit', (event) => {
 			event.preventDefault();
@@ -97,7 +91,7 @@ const forms = () => {
 				case item.closest('.popup-design') !== null || item.classList.contains('form_calc'):
 					api = path.designer;
 					break;
-				case item.closest('.popup-consultation') !== null:
+				case item.closest('.popup-consultation') !== null || item.classList.contains('form_consultation-main'):
 					api = path.question;
 					break;
 			}
