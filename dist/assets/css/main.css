@@ -64,6 +64,9 @@
   h4 {
 	font-family: 'Circe Extra Bold', sans-serif;
   }
+  .status {
+	text-align: center;
+  }
   .p15 {
 	font-size: 1.5;
   }
@@ -220,7 +223,7 @@
 	overflow: hidden;
 	font-size: 1em;
 	/* example */
-	height: 4em;
+	height: 6em;
 	/* example */
 	line-height: 2em /* the same as height */;
   }
@@ -228,7 +231,6 @@
 	float: right;
 	width: 8em;
 	/* example */
-	height: 100%;
   }
   .main .file_upload > div {
 	padding-left: 1em;
@@ -550,7 +552,7 @@
 	overflow: hidden;
 	font-size: 1em;
 	/* example */
-	height: 4em;
+	height: 6em;
 	/* example */
 	line-height: 2em /* the same as height */;
   }
@@ -558,7 +560,6 @@
 	float: right;
 	width: 8em;
 	/* example */
-	height: 100%;
   }
   .calc .file_upload > div {
 	padding-left: 1em /* example */;
@@ -823,7 +824,6 @@
   .promo-2 img {
 	max-width: 100%;
 	position: relative;
-	right: -10rem;
   }
   .feedback {
 	background-color: #f7e7e6;
@@ -840,7 +840,7 @@
   }
   .feedback-block .button-order {
 	position: absolute;
-	bottom: -3rem;
+	bottom: -1rem;
 	left: 15rem;
 	z-index: 1000000;
   }
@@ -1140,7 +1140,7 @@
 	overflow: hidden;
 	font-size: 1em;
 	/* example */
-	height: 4em;
+	height: 6em;
 	/* example */
 	line-height: 2em /* the same as height */;
   }
@@ -1148,7 +1148,6 @@
 	float: right;
 	width: 8em;
 	/* example */
-	height: 100%;
   }
   .popup-design .file_upload > div {
 	padding-left: 1em;
@@ -1248,20 +1247,17 @@
 	.paints {
 	  display: none;
 	}
-	.calc .file_upload > div {
-	  display: none;
-	}
 	.calc .file_upload > button {
 	  width: 100%;
 	}
 	.popup-design .file_upload > div {
-	  display: none;
+	  display: block;
 	}
 	.popup-design .file_upload > button {
 	  width: 100%;
 	}
 	.main .file_upload > div {
-	  display: none;
+	  display: block;
 	}
 	.main .file_upload > button {
 	  width: 100%;
