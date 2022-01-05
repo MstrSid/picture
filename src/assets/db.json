@@ -20,5 +20,30 @@
             "title": "Шарж",
             "link": "#sharj"
         }
-    ]
+    ],
+
+	"size": {
+		"40_50": 1000,
+		"50_70": 1700,
+		"70_70": 2200,
+		"70_100": 3200
+	},
+
+	"material": {
+		"fiber": 1,
+		"linen": 1.2,
+		"cotton": 1.5
+	},
+
+	"options": {
+		"gel": 500,
+		"express": 1000,
+		"delivery": 500
+	},
+
+	"promos": {
+		"IWANTPOPART": 0.3,
+		"IWANTMORE": 0.4
+
+	}
 }

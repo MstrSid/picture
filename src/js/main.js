@@ -4,6 +4,7 @@ import forms from './modules/forms';
 import mask from './modules/mask';
 import checkLangInput from './modules/checkLangInput';
 import simpleLoad from './modules/simpleLoad';
+import calculator from './modules/calculator';
 
 window.addEventListener('DOMContentLoaded', () => {
 	'use strict';
@@ -20,4 +21,5 @@ window.addEventListener('DOMContentLoaded', () => {
 	simpleLoad('.button-styles',
 		'#styles .row',
 		'.animated .fadeInUp .col-sm-3 .col-sm-offset-0 .col-xs-10 .col-xs-offset-1');
+	calculator('#size', '#material', '#options', '.promocode', '.calc-price');
 });

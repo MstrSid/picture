@@ -101,6 +101,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_mask__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/mask */ "./src/js/modules/mask.js");
 /* harmony import */ var _modules_checkLangInput__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/checkLangInput */ "./src/js/modules/checkLangInput.js");
 /* harmony import */ var _modules_simpleLoad__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/simpleLoad */ "./src/js/modules/simpleLoad.js");
+/* harmony import */ var _modules_calculator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/calculator */ "./src/js/modules/calculator.js");
+
 
 
 
@@ -121,7 +123,66 @@ window.addEventListener('DOMContentLoaded', () => {
   // 	'.col-sm-3 .col-sm-offset-0 .col-xs-10 .col-xs-offset-1');
 
   Object(_modules_simpleLoad__WEBPACK_IMPORTED_MODULE_5__["default"])('.button-styles', '#styles .row', '.animated .fadeInUp .col-sm-3 .col-sm-offset-0 .col-xs-10 .col-xs-offset-1');
+  Object(_modules_calculator__WEBPACK_IMPORTED_MODULE_6__["default"])('#size', '#material', '#options', '.promocode', '.calc-price');
 });
+
+/***/ }),
+
+/***/ "./src/js/modules/calculator.js":
+/*!**************************************!*\
+  !*** ./src/js/modules/calculator.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _services_requests__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/requests */ "./src/js/services/requests.js");
+
+
+const calculator = async (size, material, options, promocode, result) => {
+  const sizeBlock = document.querySelector(size),
+        materialBlock = document.querySelector(material),
+        optionsBlock = document.querySelector(options),
+        promocodeBlock = document.querySelector(promocode),
+        resultBlock = document.querySelector(result);
+  let sum = 0;
+  let promo = 0;
+  let responseSizes, responseMaterial, responseOptions, responsePromos;
+  let response = await Object(_services_requests__WEBPACK_IMPORTED_MODULE_0__["getData"])('assets/db.json');
+  responseSizes = response.size;
+  responseMaterial = response.material;
+  responseOptions = response.options;
+  responsePromos = response.promos;
+
+  const calcFunc = () => {
+    sum = Math.round((responseSizes[sizeBlock.value] || 0) * (responseMaterial[materialBlock.value] || 0) + (responseOptions[optionsBlock.value] || 0));
+
+    for (let key in responsePromos) {
+      if (key === promocodeBlock.value.trim()) {
+        promo = +responsePromos[key];
+        break;
+      } else {
+        promo = 0;
+      }
+    }
+
+    if (sizeBlock.value == '' || materialBlock.value == '') {
+      resultBlock.textContent = "Пожалуйста, выберите размер и материал картины";
+    } else if (promo > 0) {
+      resultBlock.textContent = Math.round(sum - sum * promo);
+    } else {
+      resultBlock.textContent = sum;
+    }
+  };
+
+  sizeBlock.addEventListener('change', calcFunc);
+  materialBlock.addEventListener('change', calcFunc);
+  optionsBlock.addEventListener('change', calcFunc);
+  promocodeBlock.addEventListener('input', calcFunc);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (calculator);
 
 /***/ }),
 
