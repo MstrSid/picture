@@ -8,10 +8,12 @@ import calculator from './modules/calculator';
 
 window.addEventListener('DOMContentLoaded', () => {
 	'use strict';
+
+	const state = {};
 	modals();
 	sliders('.main-slider-item', undefined, undefined, 'vertical');
 	sliders('.feedback-slider-item', '.main-prev-btn', '.main-next-btn');
-	forms();
+	forms(state);
 	mask('[name="phone"]');
 	checkLangInput('[name="name"]');
 	checkLangInput('[name="message"]');
@@ -21,5 +23,5 @@ window.addEventListener('DOMContentLoaded', () => {
 	simpleLoad('.button-styles',
 		'#styles .row',
 		'.animated .fadeInUp .col-sm-3 .col-sm-offset-0 .col-xs-10 .col-xs-offset-1');
-	calculator('#size', '#material', '#options', '.promocode', '.calc-price');
+	calculator('#size', '#material', '#options', '.promocode', '.calc-price', state);
 });

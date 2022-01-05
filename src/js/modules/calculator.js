@@ -3,7 +3,7 @@ import {
 } from "../services/requests";
 
 
-const calculator = async (size, material, options, promocode, result) => {
+const calculator = async (size, material, options, promocode, result, state) => {
 	const sizeBlock = document.querySelector(size),
 		materialBlock = document.querySelector(material),
 		optionsBlock = document.querySelector(options),
@@ -35,9 +35,15 @@ const calculator = async (size, material, options, promocode, result) => {
 			resultBlock.textContent = "Пожалуйста, выберите размер и материал картины";
 		} else if (promo > 0) {
 			resultBlock.textContent = Math.round(sum - (sum * promo));
+			state.price = +resultBlock.textContent;
 		} else {
 			resultBlock.textContent = sum;
+			state.price = +resultBlock.textContent;
 		}
+		state.size = sizeBlock.value;
+		state.material = materialBlock.value;
+		state.options = optionsBlock.value;
+		console.log(state);
 	};
 
 	sizeBlock.addEventListener('change', calcFunc);
@@ -48,6 +54,6 @@ const calculator = async (size, material, options, promocode, result) => {
 
 /* 
 TODO: make send information from calculator
-*/ 
+*/
 
 export default calculator;

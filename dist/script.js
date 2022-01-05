@@ -112,10 +112,11 @@ __webpack_require__.r(__webpack_exports__);
 window.addEventListener('DOMContentLoaded', () => {
   'use strict';
 
+  const state = {};
   Object(_modules_modals__WEBPACK_IMPORTED_MODULE_0__["default"])();
   Object(_modules_sliders__WEBPACK_IMPORTED_MODULE_1__["default"])('.main-slider-item', undefined, undefined, 'vertical');
   Object(_modules_sliders__WEBPACK_IMPORTED_MODULE_1__["default"])('.feedback-slider-item', '.main-prev-btn', '.main-next-btn');
-  Object(_modules_forms__WEBPACK_IMPORTED_MODULE_2__["default"])();
+  Object(_modules_forms__WEBPACK_IMPORTED_MODULE_2__["default"])(state);
   Object(_modules_mask__WEBPACK_IMPORTED_MODULE_3__["default"])('[name="phone"]');
   Object(_modules_checkLangInput__WEBPACK_IMPORTED_MODULE_4__["default"])('[name="name"]');
   Object(_modules_checkLangInput__WEBPACK_IMPORTED_MODULE_4__["default"])('[name="message"]'); // simpleLoad('.button-styles',
@@ -123,7 +124,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // 	'.col-sm-3 .col-sm-offset-0 .col-xs-10 .col-xs-offset-1');
 
   Object(_modules_simpleLoad__WEBPACK_IMPORTED_MODULE_5__["default"])('.button-styles', '#styles .row', '.animated .fadeInUp .col-sm-3 .col-sm-offset-0 .col-xs-10 .col-xs-offset-1');
-  Object(_modules_calculator__WEBPACK_IMPORTED_MODULE_6__["default"])('#size', '#material', '#options', '.promocode', '.calc-price');
+  Object(_modules_calculator__WEBPACK_IMPORTED_MODULE_6__["default"])('#size', '#material', '#options', '.promocode', '.calc-price', state);
 });
 
 /***/ }),
@@ -140,7 +141,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_requests__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/requests */ "./src/js/services/requests.js");
 
 
-const calculator = async (size, material, options, promocode, result) => {
+const calculator = async (size, material, options, promocode, result, state) => {
   const sizeBlock = document.querySelector(size),
         materialBlock = document.querySelector(material),
         optionsBlock = document.querySelector(options),
@@ -171,9 +172,16 @@ const calculator = async (size, material, options, promocode, result) => {
       resultBlock.textContent = "Пожалуйста, выберите размер и материал картины";
     } else if (promo > 0) {
       resultBlock.textContent = Math.round(sum - sum * promo);
+      state.price = +resultBlock.textContent;
     } else {
       resultBlock.textContent = sum;
+      state.price = +resultBlock.textContent;
     }
+
+    state.size = sizeBlock.value;
+    state.material = materialBlock.value;
+    state.options = optionsBlock.value;
+    console.log(state);
   };
 
   sizeBlock.addEventListener('change', calcFunc);
@@ -181,6 +189,10 @@ const calculator = async (size, material, options, promocode, result) => {
   optionsBlock.addEventListener('change', calcFunc);
   promocodeBlock.addEventListener('input', calcFunc);
 };
+/* 
+TODO: make send information from calculator
+*/
+
 
 /* harmony default export */ __webpack_exports__["default"] = (calculator);
 
@@ -227,11 +239,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_requests__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/requests */ "./src/js/services/requests.js");
 
 
-const forms = () => {
+const forms = state => {
   const form = document.querySelectorAll('form'),
         inputs = document.querySelectorAll('input'),
         selects = document.querySelectorAll('select'),
-        phoneInputs = document.querySelectorAll('input[name="phone"]'),
         upload = document.querySelectorAll('[name="upload"]');
   const message = {
     loading: 'Загрузка...',
@@ -295,6 +306,13 @@ const forms = () => {
       textMessage.textContent = message.loading;
       statusMessage.appendChild(textMessage);
       const formData = new FormData(item);
+
+      if (item.classList.contains('form_calc')) {
+        for (let key in state) {
+          formData.append(key, state[key]);
+        }
+      }
+
       let api;
 
       switch (true) {

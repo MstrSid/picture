@@ -1,10 +1,9 @@
 import { postData } from "../services/requests";
 
-const forms = () => {
+const forms = (state) => {
 	const form = document.querySelectorAll('form'),
 		inputs = document.querySelectorAll('input'),
 		selects = document.querySelectorAll('select'),
-		phoneInputs = document.querySelectorAll('input[name="phone"]'),
 		upload = document.querySelectorAll('[name="upload"]');
 
 	const message = {
@@ -78,6 +77,12 @@ const forms = () => {
 			statusMessage.appendChild(textMessage);
 
 			const formData = new FormData(item);
+			
+			if (item.classList.contains('form_calc')) { 
+                for (let key in state) { 
+                    formData.append(key, state[key]); 
+                }
+			}
 
 			let api;
 
