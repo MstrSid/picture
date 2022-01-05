@@ -14,7 +14,10 @@ window.addEventListener('DOMContentLoaded', () => {
 	mask('[name="phone"]');
 	checkLangInput('[name="name"]');
 	checkLangInput('[name="message"]');
+	// simpleLoad('.button-styles',
+	// 	'.hidden-lg .hidden-md .hidden-sm .hidden-xs .styles-2',
+	// 	'.col-sm-3 .col-sm-offset-0 .col-xs-10 .col-xs-offset-1');
 	simpleLoad('.button-styles',
-		'.hidden-lg .hidden-md .hidden-sm .hidden-xs .styles-2',
-		'.col-sm-3 .col-sm-offset-0 .col-xs-10 .col-xs-offset-1');
+		'#styles .row',
+		'.animated .fadeInUp .col-sm-3 .col-sm-offset-0 .col-xs-10 .col-xs-offset-1');
 });

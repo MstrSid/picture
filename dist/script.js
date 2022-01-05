@@ -116,8 +116,11 @@ window.addEventListener('DOMContentLoaded', () => {
   Object(_modules_forms__WEBPACK_IMPORTED_MODULE_2__["default"])();
   Object(_modules_mask__WEBPACK_IMPORTED_MODULE_3__["default"])('[name="phone"]');
   Object(_modules_checkLangInput__WEBPACK_IMPORTED_MODULE_4__["default"])('[name="name"]');
-  Object(_modules_checkLangInput__WEBPACK_IMPORTED_MODULE_4__["default"])('[name="message"]');
-  Object(_modules_simpleLoad__WEBPACK_IMPORTED_MODULE_5__["default"])('.button-styles', '.hidden-lg .hidden-md .hidden-sm .hidden-xs .styles-2', '.col-sm-3 .col-sm-offset-0 .col-xs-10 .col-xs-offset-1');
+  Object(_modules_checkLangInput__WEBPACK_IMPORTED_MODULE_4__["default"])('[name="message"]'); // simpleLoad('.button-styles',
+  // 	'.hidden-lg .hidden-md .hidden-sm .hidden-xs .styles-2',
+  // 	'.col-sm-3 .col-sm-offset-0 .col-xs-10 .col-xs-offset-1');
+
+  Object(_modules_simpleLoad__WEBPACK_IMPORTED_MODULE_5__["default"])('.button-styles', '#styles .row', '.animated .fadeInUp .col-sm-3 .col-sm-offset-0 .col-xs-10 .col-xs-offset-1');
 });
 
 /***/ }),
@@ -160,6 +163,9 @@ const checkLangInput = selector => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _services_requests__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/requests */ "./src/js/services/requests.js");
+
+
 const forms = () => {
   const form = document.querySelectorAll('form'),
         inputs = document.querySelectorAll('input'),
@@ -178,14 +184,6 @@ const forms = () => {
   const path = {
     designer: 'assets/server.php',
     question: 'assets/question.php'
-  };
-
-  const postData = async (url, data) => {
-    let res = await fetch(url, {
-      method: 'POST',
-      body: data
-    });
-    return await res.text();
   };
 
   const clearInputs = () => {
@@ -249,7 +247,7 @@ const forms = () => {
       }
 
       console.log(api);
-      postData(api, formData).then(res => {
+      Object(_services_requests__WEBPACK_IMPORTED_MODULE_0__["postData"])(api, formData).then(res => {
         console.log(res);
         statusImg.setAttribute('src', message.okay);
         textMessage.textContent = message.success;
@@ -463,28 +461,57 @@ const modals = () => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_spaceRemover__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/spaceRemover */ "./src/js/utils/spaceRemover.js");
+/* harmony import */ var _services_requests__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/requests */ "./src/js/services/requests.js");
 
 
-const simpleLoad = (selector, hiddenSelector, showSelector) => {
-  const trigger = document.querySelector(selector),
-        hiddenItems = document.querySelectorAll(Object(_utils_spaceRemover__WEBPACK_IMPORTED_MODULE_0__["default"])(hiddenSelector));
-  trigger.addEventListener('click', event => {
-    if (event.target) {
-      event.preventDefault();
-      hiddenItems.forEach(item => {
-        item.classList.add('animated', 'fadeInUp');
-        const hiddenSelectors = listSelectorsFormatter(Object(_utils_spaceRemover__WEBPACK_IMPORTED_MODULE_0__["default"])(hiddenSelector));
-        const showSelectors = listSelectorsFormatter(Object(_utils_spaceRemover__WEBPACK_IMPORTED_MODULE_0__["default"])(showSelector));
-        hiddenSelectors.forEach(selector => {
-          item.classList.remove(selector);
-        });
-        showSelectors.forEach(selector => {
-          item.classList.add(selector);
-        });
-        trigger.remove();
-      });
-    }
+
+const simpleLoad = (triggerselector, parentSelector, showSelector
+/* hiddenSelector, */
+) => {
+  const trigger = document.querySelector(triggerselector); // hiddenItems = document.querySelectorAll(spaceRemover(hiddenSelector));
+  // trigger.addEventListener('click', event => {
+  // 	if (event.target) {
+  // 		event.preventDefault();
+  // 		hiddenItems.forEach(item => {
+  // 			item.classList.add('animated', 'fadeInUp');
+  // 			const hiddenSelectors = listSelectorsFormatter(spaceRemover(hiddenSelector));
+  // 			const showSelectors = listSelectorsFormatter(spaceRemover(showSelector));
+  // 			hiddenSelectors.forEach(selector => {
+  // 				item.classList.remove(selector);
+  // 			});
+  // 			showSelectors.forEach(selector => {
+  // 				item.classList.add(selector);
+  // 			});
+  // 			trigger.remove();
+  // 		});
+  // 	}
+  // });
+
+  trigger.addEventListener('click', function () {
+    Object(_services_requests__WEBPACK_IMPORTED_MODULE_1__["getData"])('assets/db.json').then(res => createCard(res.styles)).then(this.remove()).catch(error => console.log(error));
   });
+
+  function createCard(response) {
+    response.forEach(_ref => {
+      let {
+        src,
+        title,
+        link
+      } = _ref;
+      const card = document.createElement('div');
+      const showSelectors = listSelectorsFormatter(Object(_utils_spaceRemover__WEBPACK_IMPORTED_MODULE_0__["default"])(showSelector));
+      showSelectors.forEach(selector => {
+        card.classList.add(selector);
+      });
+      card.innerHTML = `
+			<div class="styles-block">
+						<img src=${src} alt="">
+						<h4>${title}</h4>
+						<a href=${link}>Подробнее</a>
+					</div>`;
+      document.querySelector(parentSelector).appendChild(card);
+    });
+  }
 
   function listSelectorsFormatter(selectors) {
     return selectors.substring(1, selectors.length).split('.');
@@ -573,6 +600,39 @@ const sliders = function (sliderSelector, prev, next) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (sliders);
+
+/***/ }),
+
+/***/ "./src/js/services/requests.js":
+/*!*************************************!*\
+  !*** ./src/js/services/requests.js ***!
+  \*************************************/
+/*! exports provided: postData, getData */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "postData", function() { return postData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getData", function() { return getData; });
+const postData = async (url, data) => {
+  let res = await fetch(url, {
+    method: 'POST',
+    body: data
+  });
+  return await res.text();
+};
+
+const getData = async url => {
+  let res = await fetch(url);
+
+  if (!res.ok) {
+    throw new Error(`Could not fetch ${url}, status: ${res.status}.`);
+  }
+
+  return await res.json();
+};
+
+
 
 /***/ }),
 
