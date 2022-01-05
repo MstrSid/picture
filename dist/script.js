@@ -99,7 +99,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_sliders__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/sliders */ "./src/js/modules/sliders.js");
 /* harmony import */ var _modules_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/forms */ "./src/js/modules/forms.js");
 /* harmony import */ var _modules_mask__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/mask */ "./src/js/modules/mask.js");
-/* harmony import */ var _modules_chekLangInput__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/chekLangInput */ "./src/js/modules/chekLangInput.js");
+/* harmony import */ var _modules_checkLangInput__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/checkLangInput */ "./src/js/modules/checkLangInput.js");
+/* harmony import */ var _modules_simpleLoad__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/simpleLoad */ "./src/js/modules/simpleLoad.js");
+
 
 
 
@@ -113,16 +115,17 @@ window.addEventListener('DOMContentLoaded', () => {
   Object(_modules_sliders__WEBPACK_IMPORTED_MODULE_1__["default"])('.feedback-slider-item', '.main-prev-btn', '.main-next-btn');
   Object(_modules_forms__WEBPACK_IMPORTED_MODULE_2__["default"])();
   Object(_modules_mask__WEBPACK_IMPORTED_MODULE_3__["default"])('[name="phone"]');
-  Object(_modules_chekLangInput__WEBPACK_IMPORTED_MODULE_4__["default"])('[name="name"]');
-  Object(_modules_chekLangInput__WEBPACK_IMPORTED_MODULE_4__["default"])('[name="message"]');
+  Object(_modules_checkLangInput__WEBPACK_IMPORTED_MODULE_4__["default"])('[name="name"]');
+  Object(_modules_checkLangInput__WEBPACK_IMPORTED_MODULE_4__["default"])('[name="message"]');
+  Object(_modules_simpleLoad__WEBPACK_IMPORTED_MODULE_5__["default"])('.button-styles', '.hidden-lg .hidden-md .hidden-sm .hidden-xs .styles-2', '.col-sm-3 .col-sm-offset-0 .col-xs-10 .col-xs-offset-1');
 });
 
 /***/ }),
 
-/***/ "./src/js/modules/chekLangInput.js":
-/*!*****************************************!*\
-  !*** ./src/js/modules/chekLangInput.js ***!
-  \*****************************************/
+/***/ "./src/js/modules/checkLangInput.js":
+/*!******************************************!*\
+  !*** ./src/js/modules/checkLangInput.js ***!
+  \******************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -450,6 +453,48 @@ const modals = () => {
 
 /***/ }),
 
+/***/ "./src/js/modules/simpleLoad.js":
+/*!**************************************!*\
+  !*** ./src/js/modules/simpleLoad.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _utils_spaceRemover__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/spaceRemover */ "./src/js/utils/spaceRemover.js");
+
+
+const simpleLoad = (selector, hiddenSelector, showSelector) => {
+  const trigger = document.querySelector(selector),
+        hiddenItems = document.querySelectorAll(Object(_utils_spaceRemover__WEBPACK_IMPORTED_MODULE_0__["default"])(hiddenSelector));
+  trigger.addEventListener('click', event => {
+    if (event.target) {
+      event.preventDefault();
+      hiddenItems.forEach(item => {
+        item.classList.add('animated', 'fadeInUp');
+        const hiddenSelectors = listSelectorsFormatter(Object(_utils_spaceRemover__WEBPACK_IMPORTED_MODULE_0__["default"])(hiddenSelector));
+        const showSelectors = listSelectorsFormatter(Object(_utils_spaceRemover__WEBPACK_IMPORTED_MODULE_0__["default"])(showSelector));
+        hiddenSelectors.forEach(selector => {
+          item.classList.remove(selector);
+        });
+        showSelectors.forEach(selector => {
+          item.classList.add(selector);
+        });
+        trigger.remove();
+      });
+    }
+  });
+
+  function listSelectorsFormatter(selectors) {
+    return selectors.substring(1, selectors.length).split('.');
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (simpleLoad);
+
+/***/ }),
+
 /***/ "./src/js/modules/sliders.js":
 /*!***********************************!*\
   !*** ./src/js/modules/sliders.js ***!
@@ -528,6 +573,23 @@ const sliders = function (sliderSelector, prev, next) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (sliders);
+
+/***/ }),
+
+/***/ "./src/js/utils/spaceRemover.js":
+/*!**************************************!*\
+  !*** ./src/js/utils/spaceRemover.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const spaceRemover = s => {
+  return s.replace(/\s/g, '');
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (spaceRemover);
 
 /***/ })
 
