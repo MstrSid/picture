@@ -78,11 +78,11 @@ const forms = (state) => {
 
 			const formData = new FormData(item);
 			
-			if (item.classList.contains('form_calc')) { 
+			/*if (item.classList.contains('form_calc')) { 
                 for (let key in state) { 
                     formData.append(key, state[key]); 
                 }
-			}
+			}*/
 
 			let api;
 

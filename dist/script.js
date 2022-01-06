@@ -306,12 +306,11 @@ const forms = state => {
       textMessage.textContent = message.loading;
       statusMessage.appendChild(textMessage);
       const formData = new FormData(item);
-
-      if (item.classList.contains('form_calc')) {
-        for (let key in state) {
-          formData.append(key, state[key]);
-        }
-      }
+      /*if (item.classList.contains('form_calc')) { 
+                   for (let key in state) { 
+                       formData.append(key, state[key]); 
+                   }
+      }*/
 
       let api;
 
