@@ -102,6 +102,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_checkLangInput__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/checkLangInput */ "./src/js/modules/checkLangInput.js");
 /* harmony import */ var _modules_simpleLoad__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/simpleLoad */ "./src/js/modules/simpleLoad.js");
 /* harmony import */ var _modules_calculator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/calculator */ "./src/js/modules/calculator.js");
+/* harmony import */ var _modules_tabs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/tabs */ "./src/js/modules/tabs.js");
+
 
 
 
@@ -125,6 +127,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   Object(_modules_simpleLoad__WEBPACK_IMPORTED_MODULE_5__["default"])('.button-styles', '#styles .row', '.animated .fadeInUp .col-sm-3 .col-sm-offset-0 .col-xs-10 .col-xs-offset-1');
   Object(_modules_calculator__WEBPACK_IMPORTED_MODULE_6__["default"])('#size', '#material', '#options', '.promocode', '.calc-price', state);
+  Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_7__["default"])('.portfolio-menu > li', '.portfolio-block', '.portfolio-no');
 });
 
 /***/ }),
@@ -683,6 +686,57 @@ const sliders = function (sliderSelector, prev, next) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (sliders);
+
+/***/ }),
+
+/***/ "./src/js/modules/tabs.js":
+/*!********************************!*\
+  !*** ./src/js/modules/tabs.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const tabs = (tabsSelector, dataSelector, noDataSelector) => {
+  const tabs = document.querySelectorAll(tabsSelector),
+        photos = document.querySelectorAll(dataSelector),
+        noData = document.querySelector(noDataSelector);
+  let count = 0;
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      count = 0;
+      noData.style.display = 'none';
+      tabs.forEach(item => {
+        item.classList.remove('animated', 'fadeIn');
+        item.classList.remove('active');
+      });
+      tab.classList.add('active');
+      tab.classList.add('animated', 'fadeIn');
+      photos.forEach(block => {
+        block.style.display = 'none';
+        block.classList.remove('animated', 'fadeIn');
+        block.classList.forEach(blockClassItem => {
+          tab.classList.forEach(tabClassItem => {
+            if (blockClassItem === tabClassItem) {
+              count++;
+              block.classList.add('animated', 'fadeIn');
+              block.style.display = 'block';
+            }
+
+            console.log(count);
+          });
+        });
+      });
+
+      if (count == 0) {
+        noData.style.display = 'block';
+      }
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (tabs);
 
 /***/ }),
 
