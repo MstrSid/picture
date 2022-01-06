@@ -107,6 +107,9 @@ const forms = (state) => {
 					textMessage.textContent = message.failure;
 				}).finally(() => {
 					clearInputs();
+					for (const key in state) {
+						delete state[key];
+					  }
 					setTimeout(() => {
 						statusMessage.remove();
 						item.style.display = 'block';
