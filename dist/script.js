@@ -103,6 +103,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_simpleLoad__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/simpleLoad */ "./src/js/modules/simpleLoad.js");
 /* harmony import */ var _modules_calculator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/calculator */ "./src/js/modules/calculator.js");
 /* harmony import */ var _modules_tabs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/tabs */ "./src/js/modules/tabs.js");
+/* harmony import */ var _modules_swipeImageMouse__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/swipeImageMouse */ "./src/js/modules/swipeImageMouse.js");
+
 
 
 
@@ -128,6 +130,7 @@ window.addEventListener('DOMContentLoaded', () => {
   Object(_modules_simpleLoad__WEBPACK_IMPORTED_MODULE_5__["default"])('.button-styles', '#styles .row', '.animated .fadeInUp .col-sm-3 .col-sm-offset-0 .col-xs-10 .col-xs-offset-1');
   Object(_modules_calculator__WEBPACK_IMPORTED_MODULE_6__["default"])('#size', '#material', '#options', '.promocode', '.calc-price', state);
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_7__["default"])('.portfolio-menu > li', '.portfolio-block', '.portfolio-no');
+  Object(_modules_swipeImageMouse__WEBPACK_IMPORTED_MODULE_8__["default"])('.sizes .sizes-block', '.png');
 });
 
 /***/ }),
@@ -689,6 +692,35 @@ const sliders = function (sliderSelector, prev, next) {
 
 /***/ }),
 
+/***/ "./src/js/modules/swipeImageMouse.js":
+/*!*******************************************!*\
+  !*** ./src/js/modules/swipeImageMouse.js ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const swipeImageMouse = (selector, imageFileExt) => {
+  const sizeBlock = document.querySelectorAll(selector);
+  sizeBlock.forEach(block => {
+    const image = block.querySelector('img'),
+          srcOriginal = image.getAttribute('src');
+    block.addEventListener('mouseenter', function () {
+      image.classList.add('animated', 'fadeIn');
+      image.setAttribute('src', `${srcOriginal.replace(imageFileExt, '')}-1.png`);
+    });
+    block.addEventListener('mouseleave', function () {
+      image.setAttribute('src', srcOriginal);
+      image.classList.remove('animated', 'fadeIn');
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (swipeImageMouse);
+
+/***/ }),
+
 /***/ "./src/js/modules/tabs.js":
 /*!********************************!*\
   !*** ./src/js/modules/tabs.js ***!
@@ -723,8 +755,6 @@ const tabs = (tabsSelector, dataSelector, noDataSelector) => {
               block.classList.add('animated', 'fadeIn');
               block.style.display = 'block';
             }
-
-            console.log(count);
           });
         });
       });

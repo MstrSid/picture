@@ -6,6 +6,7 @@ import checkLangInput from './modules/checkLangInput';
 import simpleLoad from './modules/simpleLoad';
 import calculator from './modules/calculator';
 import tabs from './modules/tabs';
+import swipeImageMouse from './modules/swipeImageMouse';
 
 window.addEventListener('DOMContentLoaded', () => {
 	'use strict';
@@ -26,4 +27,5 @@ window.addEventListener('DOMContentLoaded', () => {
 		'.animated .fadeInUp .col-sm-3 .col-sm-offset-0 .col-xs-10 .col-xs-offset-1');
 	calculator('#size', '#material', '#options', '.promocode', '.calc-price', state);
 	tabs('.portfolio-menu > li', '.portfolio-block', '.portfolio-no');
+	swipeImageMouse('.sizes .sizes-block', '.png');
 });

@@ -25,7 +25,6 @@ const tabs = (tabsSelector, dataSelector, noDataSelector) => {
 							block.classList.add('animated', 'fadeIn');
 							block.style.display = 'block';
 						}
-						console.log(count);
 					});
 				});
 			});
