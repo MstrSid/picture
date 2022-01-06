@@ -7,6 +7,7 @@ import simpleLoad from './modules/simpleLoad';
 import calculator from './modules/calculator';
 import tabs from './modules/tabs';
 import swipeImageMouse from './modules/swipeImageMouse';
+import accordeon from './modules/accordeon';
 
 window.addEventListener('DOMContentLoaded', () => {
 	'use strict';
@@ -28,4 +29,5 @@ window.addEventListener('DOMContentLoaded', () => {
 	calculator('#size', '#material', '#options', '.promocode', '.calc-price', state);
 	tabs('.portfolio-menu > li', '.portfolio-block', '.portfolio-no');
 	swipeImageMouse('.sizes .sizes-block', '.png');
+	accordeon('#accordion .accordion-heading', '#accordion .accordion-block');
 });

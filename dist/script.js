@@ -104,6 +104,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_calculator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/calculator */ "./src/js/modules/calculator.js");
 /* harmony import */ var _modules_tabs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/tabs */ "./src/js/modules/tabs.js");
 /* harmony import */ var _modules_swipeImageMouse__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/swipeImageMouse */ "./src/js/modules/swipeImageMouse.js");
+/* harmony import */ var _modules_accordeon__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/accordeon */ "./src/js/modules/accordeon.js");
+
 
 
 
@@ -131,7 +133,46 @@ window.addEventListener('DOMContentLoaded', () => {
   Object(_modules_calculator__WEBPACK_IMPORTED_MODULE_6__["default"])('#size', '#material', '#options', '.promocode', '.calc-price', state);
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_7__["default"])('.portfolio-menu > li', '.portfolio-block', '.portfolio-no');
   Object(_modules_swipeImageMouse__WEBPACK_IMPORTED_MODULE_8__["default"])('.sizes .sizes-block', '.png');
+  Object(_modules_accordeon__WEBPACK_IMPORTED_MODULE_9__["default"])('#accordion .accordion-heading', '#accordion .accordion-block');
 });
+
+/***/ }),
+
+/***/ "./src/js/modules/accordeon.js":
+/*!*************************************!*\
+  !*** ./src/js/modules/accordeon.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const accordeon = (clickElementSelector, showElementSelector) => {
+  const clickElements = document.querySelectorAll(clickElementSelector),
+        showElements = document.querySelectorAll(showElementSelector);
+  showElements.forEach(item => {
+    item.style.display = 'none';
+  });
+  clickElements.forEach((element, i) => {
+    element.addEventListener('click', function () {
+      this.classList.toggle('ui-accordion-header-active');
+
+      if (showElements[i].style.display === 'none') {
+        showElements[i].classList.remove('animated', 'fadeOut');
+        showElements[i].classList.add('animated', 'fadeIn');
+        showElements[i].style.display = 'block';
+      } else {
+        showElements[i].classList.remove('animated', 'fadeIn');
+        showElements[i].classList.add('animated', 'fadeOut');
+        setTimeout(() => {
+          showElements[i].style.display = 'none';
+        }, 500);
+      }
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (accordeon);
 
 /***/ }),
 
