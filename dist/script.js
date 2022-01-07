@@ -105,6 +105,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_tabs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/tabs */ "./src/js/modules/tabs.js");
 /* harmony import */ var _modules_swipeImageMouse__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/swipeImageMouse */ "./src/js/modules/swipeImageMouse.js");
 /* harmony import */ var _modules_accordeon__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/accordeon */ "./src/js/modules/accordeon.js");
+/* harmony import */ var _modules_burger__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/burger */ "./src/js/modules/burger.js");
+
 
 
 
@@ -134,6 +136,7 @@ window.addEventListener('DOMContentLoaded', () => {
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_7__["default"])('.portfolio-menu > li', '.portfolio-block', '.portfolio-no');
   Object(_modules_swipeImageMouse__WEBPACK_IMPORTED_MODULE_8__["default"])('.sizes .sizes-block', '.png');
   Object(_modules_accordeon__WEBPACK_IMPORTED_MODULE_9__["default"])('#accordion .accordion-heading', '#accordion .accordion-block');
+  Object(_modules_burger__WEBPACK_IMPORTED_MODULE_10__["default"])('.burger', '.header .burger-menu');
 });
 
 /***/ }),
@@ -173,6 +176,42 @@ const accordeon = (clickElementSelector, showElementSelector) => {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (accordeon);
+
+/***/ }),
+
+/***/ "./src/js/modules/burger.js":
+/*!**********************************!*\
+  !*** ./src/js/modules/burger.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const burger = (selectorBurger, selectorSubMenu) => {
+  const burgerItem = document.querySelector(selectorBurger),
+        subMenu = document.querySelector(selectorSubMenu);
+  let timeout = false;
+  window.addEventListener('resize', function () {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      if (window.screen.availWidth > 991) {
+        subMenu.style.display = 'none';
+      }
+    }, 75);
+  });
+  burgerItem.addEventListener('click', () => {
+    if (window.screen.availWidth <= 991) {
+      if (getComputedStyle(subMenu).display === 'none') {
+        subMenu.style.display = 'block';
+      } else {
+        subMenu.style.display = 'none';
+      }
+    }
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (burger);
 
 /***/ }),
 

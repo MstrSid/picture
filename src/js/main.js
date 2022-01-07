@@ -8,6 +8,7 @@ import calculator from './modules/calculator';
 import tabs from './modules/tabs';
 import swipeImageMouse from './modules/swipeImageMouse';
 import accordeon from './modules/accordeon';
+import burger from './modules/burger';
 
 window.addEventListener('DOMContentLoaded', () => {
 	'use strict';
@@ -30,4 +31,5 @@ window.addEventListener('DOMContentLoaded', () => {
 	tabs('.portfolio-menu > li', '.portfolio-block', '.portfolio-no');
 	swipeImageMouse('.sizes .sizes-block', '.png');
 	accordeon('#accordion .accordion-heading', '#accordion .accordion-block');
+	burger('.burger', '.header .burger-menu');
 });
