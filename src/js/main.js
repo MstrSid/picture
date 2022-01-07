@@ -10,6 +10,7 @@ import swipeImageMouse from './modules/swipeImageMouse';
 import accordeon from './modules/accordeon';
 import burger from './modules/burger';
 import scrolling from './modules/scrolling';
+import drop from './modules/drop';
 
 window.addEventListener('DOMContentLoaded', () => {
 	'use strict';
@@ -35,4 +36,5 @@ window.addEventListener('DOMContentLoaded', () => {
 	burger('.burger', '.header .burger-menu');
 	scrolling('.pageup', true);
 	scrolling('.header-menu-sub a');
+	drop();
 });

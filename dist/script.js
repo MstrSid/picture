@@ -107,6 +107,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_accordeon__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/accordeon */ "./src/js/modules/accordeon.js");
 /* harmony import */ var _modules_burger__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/burger */ "./src/js/modules/burger.js");
 /* harmony import */ var _modules_scrolling__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/scrolling */ "./src/js/modules/scrolling.js");
+/* harmony import */ var _modules_drop__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./modules/drop */ "./src/js/modules/drop.js");
+
 
 
 
@@ -141,6 +143,7 @@ window.addEventListener('DOMContentLoaded', () => {
   Object(_modules_burger__WEBPACK_IMPORTED_MODULE_10__["default"])('.burger', '.header .burger-menu');
   Object(_modules_scrolling__WEBPACK_IMPORTED_MODULE_11__["default"])('.pageup', true);
   Object(_modules_scrolling__WEBPACK_IMPORTED_MODULE_11__["default"])('.header-menu-sub a');
+  Object(_modules_drop__WEBPACK_IMPORTED_MODULE_12__["default"])();
 });
 
 /***/ }),
@@ -314,6 +317,86 @@ const checkLangInput = selector => {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (checkLangInput);
+
+/***/ }),
+
+/***/ "./src/js/modules/drop.js":
+/*!********************************!*\
+  !*** ./src/js/modules/drop.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const drop = () => {
+  const fileInputs = document.querySelectorAll('[name="upload"]');
+  ["dragenter", "dragleave", "dragover", "drop"].forEach(eventName => {
+    fileInputs.forEach(element => {
+      element.addEventListener(eventName, preventDefaults, false);
+    });
+  });
+
+  function preventDefaults(e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  function highlight(selector) {
+    selector.closest('.file_upload').style.border = '2px solid yellow';
+  }
+
+  function unHighlight(selector) {
+    selector.closest('.file_upload').style.border = 'none';
+  }
+
+  ["dragenter", "dragover"].forEach(eventName => {
+    fileInputs.forEach(element => {
+      element.addEventListener(eventName, () => highlight(element), false);
+    });
+  });
+  ["dragleave", "drop"].forEach(eventName => {
+    fileInputs.forEach(element => {
+      element.addEventListener(eventName, () => unHighlight(element), false);
+    });
+  });
+  fileInputs.forEach(item => {
+    item.addEventListener('drop', e => {
+      item.files = e.dataTransfer.files;
+      let fileName;
+      const lastIndexDot = item.files[0].name.lastIndexOf('.');
+      const extension = item.files[0].name.substring(lastIndexDot, item.files[0].name.length);
+      console.log(lastIndexDot);
+      console.log(extension);
+
+      if (item.files[0].name.substring(0, lastIndexDot).length > 7) {
+        fileName = `${item.files[0].name.substring(0, 6)}...${extension}`;
+      } else {
+        fileName = `${item.files[0].name}`;
+      }
+
+      console.group(fileName);
+      item.previousElementSibling.textContent = fileName;
+
+      if (item.closest('main')) {
+        const formData = new FormData();
+        formData.append('file', item.files[0]);
+
+        const postData = async (url, data) => {
+          let res = await fetch(url, {
+            method: "POST",
+            body: data
+          });
+          return await res.text();
+        };
+
+        postData('assets/server.php', formData).then(res => console.log(res)).catch(() => console.log('Ошибка'));
+      }
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (drop);
 
 /***/ }),
 
