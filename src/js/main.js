@@ -9,6 +9,7 @@ import tabs from './modules/tabs';
 import swipeImageMouse from './modules/swipeImageMouse';
 import accordeon from './modules/accordeon';
 import burger from './modules/burger';
+import scrolling from './modules/scrolling';
 
 window.addEventListener('DOMContentLoaded', () => {
 	'use strict';
@@ -32,4 +33,6 @@ window.addEventListener('DOMContentLoaded', () => {
 	swipeImageMouse('.sizes .sizes-block', '.png');
 	accordeon('#accordion .accordion-heading', '#accordion .accordion-block');
 	burger('.burger', '.header .burger-menu');
+	scrolling('.pageup', true);
+	scrolling('.header-menu-sub a');
 });

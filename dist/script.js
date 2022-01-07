@@ -106,6 +106,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_swipeImageMouse__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/swipeImageMouse */ "./src/js/modules/swipeImageMouse.js");
 /* harmony import */ var _modules_accordeon__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/accordeon */ "./src/js/modules/accordeon.js");
 /* harmony import */ var _modules_burger__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/burger */ "./src/js/modules/burger.js");
+/* harmony import */ var _modules_scrolling__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/scrolling */ "./src/js/modules/scrolling.js");
+
 
 
 
@@ -137,6 +139,8 @@ window.addEventListener('DOMContentLoaded', () => {
   Object(_modules_swipeImageMouse__WEBPACK_IMPORTED_MODULE_8__["default"])('.sizes .sizes-block', '.png');
   Object(_modules_accordeon__WEBPACK_IMPORTED_MODULE_9__["default"])('#accordion .accordion-heading', '#accordion .accordion-block');
   Object(_modules_burger__WEBPACK_IMPORTED_MODULE_10__["default"])('.burger', '.header .burger-menu');
+  Object(_modules_scrolling__WEBPACK_IMPORTED_MODULE_11__["default"])('.pageup', true);
+  Object(_modules_scrolling__WEBPACK_IMPORTED_MODULE_11__["default"])('.header-menu-sub a');
 });
 
 /***/ }),
@@ -617,6 +621,85 @@ const modals = () => {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (modals);
+
+/***/ }),
+
+/***/ "./src/js/modules/scrolling.js":
+/*!*************************************!*\
+  !*** ./src/js/modules/scrolling.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const scrolling = function (upSelector) {
+  let needOpaticy = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  const buttons = document.querySelectorAll(upSelector);
+  buttons.forEach(button => {
+    if (needOpaticy === true) {
+      window.addEventListener('scroll', () => {
+        if (document.documentElement.scrollTop > 1650) {
+          button.style.opacity = 1;
+        } else {
+          button.style.opacity = 0;
+        }
+      });
+    }
+
+    const element = document.documentElement,
+          body = document.body;
+
+    const calcScroll = () => {
+      button.addEventListener('click', function (event) {
+        let scrollFromTop = Math.round(body.scrollTop || element.scrollTop);
+
+        if (this.hash !== "") {
+          event.preventDefault();
+          let hashElement = document.querySelector(this.hash),
+              hashElementTop = 0;
+
+          while (hashElement.offsetParent) {
+            hashElementTop += hashElement.offsetTop;
+            hashElement = hashElement.offsetParent;
+          }
+
+          hashElementTop = Math.round(hashElementTop);
+          smoothScroll(scrollFromTop, hashElementTop, this.hash);
+        }
+      });
+    };
+
+    const smoothScroll = (from, to, hash) => {
+      let timeInterval = 1,
+          prevScrollTop,
+          speed;
+
+      if (to > from) {
+        speed = 30;
+      } else {
+        speed = -30;
+      }
+
+      let move = setInterval(function () {
+        let scrollFromTop = Math.round(body.scrollTop || element.scrollTop);
+
+        if (prevScrollTop === scrollFromTop || to > from && scrollFromTop >= to || to < from && scrollFromTop <= to) {
+          clearInterval(move);
+          history.replaceState(history.state, document.title, location.href.replace(/#.*$/g, '') + hash);
+        } else {
+          body.scrollTop += speed;
+          element.scrollTop += speed;
+          prevScrollTop = scrollFromTop;
+        }
+      }, timeInterval);
+    };
+
+    calcScroll();
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (scrolling);
 
 /***/ }),
 
